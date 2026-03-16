@@ -22,13 +22,9 @@ return new class extends Migration
                 ->constrained('tickets')
                 ->cascadeOnDelete();
 
-            $table->foreignId('cliente_id')
-                ->nullable()
-                ->constrained('clientes');
-
             $table->foreignId('usuario_id')
-                ->nullable()
-                ->constrained('usuarios');
+                ->constrained('usuarios')
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });
