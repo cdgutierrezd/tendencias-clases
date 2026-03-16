@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('descripcion');
             $table->text('imagen')->nullable();
             $table->string('estado');
+            $table->string('registrado_por');
 
             $table->timestamp('fecha_creacion');
             $table->timestamp('fecha_cierre')->nullable();

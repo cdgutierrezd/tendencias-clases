@@ -15,6 +15,8 @@ class Comentario extends Model
     protected $fillable = [
         'mensaje',
         'fecha',
+        'registrado_por',
+        'estado',
         'ticket_id',
         'usuario_id',
     ];

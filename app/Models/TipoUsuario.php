@@ -14,6 +14,7 @@ class TipoUsuario extends Model
 
     protected $fillable = [
         'nombre_tipo',
+        'estado',
     ];
 
     // Relación 1:N con usuarios

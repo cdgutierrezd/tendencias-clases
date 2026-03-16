@@ -17,18 +17,29 @@ class Ticket extends Model
         'descripcion',
         'imagen',
         'estado',
+        'registrado_por',
         'fecha_creacion',
-        'fecha_cierre'
+        'fecha_cierre',
+        'cliente_id',
+        'usuario_asignado_id',
     ];
 
-    //Relación con cliente(N:1)
-    public function cliente(){
-        return $this->belongsTo(Cliente::class);
+    // Relación con cliente(N:1)
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
-    //Relación con comentarios(1:N)
-    public function comentarios(){
-        return $this->hasMany(Comentario::class,'ticket_id');
+    // Relación con usuario asignado (N:1)
+    public function usuarioAsignado()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_asignado_id');
+    }
+
+    // Relación con comentarios(1:N)
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'ticket_id');
     }
 
 }

@@ -15,12 +15,14 @@ class Cliente extends Model
     protected $fillable = [
         'nombre',
         'direccion',
-        'telefono'
+        'telefono',
+        'estado',
     ];
 
-    //Relación con ticket(1:N)
-    public function tickets(){
-        return $this->hasMany(Ticket::class,'cliente_id');
+    // Relación con ticket(1:N)
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'cliente_id');
     }
 
 }

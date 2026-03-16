@@ -14,6 +14,7 @@ class Usuario extends Model
 
     protected $fillable = [
         'nombre',
+        'estado',
         'tipo_usuario_id',
     ];
 
@@ -27,5 +28,11 @@ class Usuario extends Model
     public function comentarios()
     {
         return $this->hasMany(Comentario::class, 'usuario_id');
+    }
+
+    // Relación 1:N con tickets asignados
+    public function ticketsAsignados()
+    {
+        return $this->hasMany(Ticket::class, 'usuario_asignado_id');
     }
 }
