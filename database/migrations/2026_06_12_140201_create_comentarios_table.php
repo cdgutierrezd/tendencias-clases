@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('mensaje');
             $table->timestamp('fecha');
             $table->string('registrado_por');
-            $table->string('estado');
+            $table->tinyInteger('estado')->default(1);
 
             $table->foreignId('ticket_id')
                 ->constrained('tickets')

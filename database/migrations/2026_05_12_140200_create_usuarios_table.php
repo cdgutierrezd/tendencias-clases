@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();
             $table->string('nombre');
-            $table->string('estado');
+            $table->tinyInteger('estado')->default(1);
             $table->string('registrado_por');
 
             $table->foreignId('tipo_usuario_id')

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->text('descripcion');
             $table->text('imagen')->nullable();
-            $table->string('estado');
+            $table->tinyInteger('estado')->default(1);
             $table->string('registrado_por');
 
             $table->timestamp('fecha_creacion');
