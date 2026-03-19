@@ -17,6 +17,7 @@ class ClienteFactory extends Factory
      */
     public function definition(): array
     {
+        
         return [
             'nombre' => $this->faker->name(),
             'direccion' => $this->faker->address(),
@@ -24,5 +25,6 @@ class ClienteFactory extends Factory
             'estado' => '1',
             'registrado_por' => $this->faker->name(),
         ];
+        
     }
 }
