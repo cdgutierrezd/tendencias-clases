@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('estado');
+            $table->string('registrado_por');
 
             $table->foreignId('tipo_usuario_id')
                 ->constrained('tipo_usuarios')

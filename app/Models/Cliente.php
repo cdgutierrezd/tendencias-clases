@@ -17,6 +17,7 @@ class Cliente extends Model
         'direccion',
         'telefono',
         'estado',
+        'registrado_por',
     ];
 
     // Relación con ticket(1:N)

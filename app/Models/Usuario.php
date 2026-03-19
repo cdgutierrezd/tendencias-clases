@@ -16,6 +16,7 @@ class Usuario extends Model
         'nombre',
         'estado',
         'tipo_usuario_id',
+        'registrado_por',
     ];
 
     // Relación inversa con tipo de usuario (N:1)

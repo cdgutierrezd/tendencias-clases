@@ -21,11 +21,15 @@ class Comentario extends Model
         'usuario_id',
     ];
 
+
+
+    // Relación N:1 con ticket
     public function ticket()
     {
         return $this->belongsTo(Ticket::class, 'ticket_id');
     }
 
+    //  Relación N:1 con usuario
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'usuario_id');
