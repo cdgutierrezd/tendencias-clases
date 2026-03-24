@@ -3,12 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Cliente;
+use App\Models\TipoUsuario;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cliente>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TipoUsuario>
  */
-class ClienteFactory extends Factory
+class TipoUsuarioFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,14 +17,10 @@ class ClienteFactory extends Factory
      */
     public function definition(): array
     {
-        
         return [
-            'nombre' => $this->faker->name(),
-            'direccion' => $this->faker->address(),
-            'telefono' => $this->faker->phoneNumber(),
+            'nombre_tipo' => $this->faker->randomElement(['Admin', 'Usuario', 'Moderador', 'Cliente']),
             'estado' => 1,
             'registrado_por' => $this->faker->name(),
         ];
-        
     }
 }
