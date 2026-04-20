@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="#" class="brand-link">
-		<img src="{{ asset('backend/dist/img/logo_ingenieriadesistemas.jpeg')}}" alt="Logo"  style="opacity: .8; width:200px; height:70px;">
+		<img src="{{ asset('backend/dist/img/ticket_logo.png')}}" alt="Logo"  style="opacity: .8; width:200px; height:70px;">
     </a>
     <div class="sidebar">
 		<nav class="mt-2">
@@ -23,29 +23,29 @@
 					<ul class="nav nav-treeview">
 							<li class="nav-item">
 								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-globe"></i>
+									<i class="nav-icon fas fa-ticket-alt"></i>
 									<p>Tickets</p>
 								</a>
 							</li>
 
 							<li class="nav-item">
 								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-map-marker"></i>
-									<p>Departamento</p>
+									<i class="nav-icon fas fa-handshake"></i>
+									<p>Clientes</p>
 								</a>
 							</li>
 
 							<li class="nav-item">
 								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-map-marker-alt"></i>
-									<p>Ciudad</p>
+									<i class="nav-icon fas fa-users"></i>
+									<p>Usuarios</p>
 								</a>
 							</li>
 
 							<li class="nav-item">
 								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-address-card"></i>
-									<p>Tipo Documento</p>
+									<i class="nav-icon fas fa-user-tag"></i>
+									<p>Tipos de Usuario</p>
 								</a>
 							</li>
 					</ul>
