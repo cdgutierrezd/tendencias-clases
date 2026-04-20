@@ -1,23 +1,72 @@
 @extends('layouts.app')
 
+@section('title','Panel De Control')
+
 @section('content')
-<style>
-    body { background: #f7f7f7; font-family: 'Segoe UI', sans-serif; }
-    .container { max-width: 480px; margin: 6vh auto; padding: 0 1rem; }
-    .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.06); padding: 2.5rem 2rem; text-align: center; }
-    .welcome-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-    .welcome-title { font-size: 1.1rem; font-weight: 700; color: #222; margin-bottom: .4rem; }
-    .welcome-sub { font-size: .85rem; color: #888; }
-    .alert-success { background: #f0faf4; border: 1px solid #b7e4c7; color: #276749; border-radius: 5px; padding: .7rem 1rem; margin-bottom: 1.2rem; font-size: .85rem; }
-</style>
-<div class="container">
-    @if (session('status'))
-        <div class="alert alert-success" role="alert">{{ session('status') }}</div>
-    @endif
-    <div class="card">
-        <div class="welcome-icon">👋</div>
-        <div class="welcome-title">Bienvenido, {{ Auth::user()->name }}</div>
-        <div class="welcome-sub">Has iniciado sesión correctamente.</div>
-    </div>
-</div>
+
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0">@yield('title')</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-3 col-6">
+						<div class="small-box bg-info">
+							<div class="inner">
+								<h3></h3>
+								<p>Total Clientes</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-stats-bars"></i>
+							</div>
+							<a href="" class="small-box-footer">Más Información <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<div class="col-lg-3 col-6">
+						<div class="small-box bg-success">
+							<div class="inner">
+								<h3>53<sup style="font-size: 20px">%</sup></h3>
+								<p>Bounce Rate</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-bag"></i>
+							</div>
+							<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<div class="col-lg-3 col-6">
+						<div class="small-box bg-warning">
+							<div class="inner">
+								<h3>44</h3>
+								<p>User Registrations</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-person-add"></i>
+							</div>
+							<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<div class="col-lg-3 col-6">
+						<div class="small-box bg-danger">
+							<div class="inner">
+								<h3>65</h3>
+								<p>Unique Visitors</p>
+							</div>
+							<div class="icon">
+								<i class="ion ion-pie-graph"></i>
+							</div>
+							<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+				</div>
+		  </div>
+		</section>
+	</div>
 @endsection
