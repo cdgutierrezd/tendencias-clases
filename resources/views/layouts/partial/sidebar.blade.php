@@ -14,41 +14,39 @@
 					</a>
 				</li>
 				
-				
 				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="nav-icon fas fa-dharmachakra"></i>
-						<p>Parámetros<i class="right fas fa-angle-left"></i></p>
+					<a href="{{route('tickets.index')}}" class="nav-link">
+						<i class="nav-icon fas fa-ticket-alt"></i>
+						<p>Tickets</p>
 					</a>
-					<ul class="nav nav-treeview">
-							<li class="nav-item">
-								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-ticket-alt"></i>
-									<p>Tickets</p>
-								</a>
-							</li>
+				</li>
 
-							<li class="nav-item">
-								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-handshake"></i>
-									<p>Clientes</p>
-								</a>
-							</li>
+				<li class="nav-item">
+					<a href="{{route('clientes.index')}}" class="nav-link">
+						<i class="nav-icon fas fa-handshake"></i>
+						<p>Clientes</p>
+					</a>
+				</li>
 
-							<li class="nav-item">
-								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-users"></i>
-									<p>Usuarios</p>
-								</a>
-							</li>
+				<li class="nav-item">
+					<a href="{{route('usuarios.index')}}" class="nav-link">
+						<i class="nav-icon fas fa-users"></i>
+						<p>Usuarios</p>
+					</a>
+				</li>
 
-							<li class="nav-item">
-								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-user-tag"></i>
-									<p>Tipos de Usuario</p>
-								</a>
-							</li>
-					</ul>
+				<li class="nav-item">
+					<a href="{{route('tipousuarios.index')}}" class="nav-link">
+						<i class="nav-icon fas fa-user-tag"></i>
+						<p>Tipos de Usuario</p>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a href="{{route('comentarios.index')}}" class="nav-link">
+						<i class="nav-icon fas fa-comments"></i>
+						<p>Comentarios</p>
+					</a>
 				</li>
 			</ul>
 		</nav>
