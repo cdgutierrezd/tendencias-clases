@@ -6,7 +6,7 @@
 <div class="login-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-          <img src="{{asset('backend/dist/img/logo_audysoft.png')}}" alt="">
+          <img src="{{asset('backend/dist/img/ticket_logo.png') }}" alt="">
         </div>
         <div class="card-body">
             @if (session('status'))
@@ -28,6 +28,11 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                         <button type="submit" class="btn btn-primary btn-block">{{ __('Send Password Reset Link') }}</button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                        <a href="{{ route('login') }}" class="btn btn-secondary btn-block" style="margin-top: .75rem;">Volver al login</a>
                     </div>
                 </div>
             </form>

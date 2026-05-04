@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="#" class="brand-link">
-		<img src="{{ asset('backend/dist/img/ticket_logo.png')}}" alt="Logo"  style="opacity: .8; width:200px; height:70px;">
+    <a href="#" class="brand-link d-flex justify-content-center">
+		<img src="{{ asset('backend/dist/img/ticket_logo.png')}}" alt="Logo" style="opacity: .8; max-width: 100%; max-height: 70px; height: auto; width: auto; display: block; margin: 0 auto;">
     </a>
     <div class="sidebar">
 		<nav class="mt-2">

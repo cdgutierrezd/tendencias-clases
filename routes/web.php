@@ -24,10 +24,18 @@ Route::get('/about', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('clientes', ClientesController::class);
+
     Route::resource('tickets', TicketsController::class);
+    Route::get('cambioestadoticket', [TicketsController::class, 'cambioestadoticket'])->name('cambioestadoticket');
+
     Route::resource('comentarios', ComentariosController::class);
+
+
     Route::resource('tipousuarios', TipoUsuariosController::class);
+
     Route::resource('usuarios', UsuariosController::class);
 });
+
+
 
 Auth::routes();

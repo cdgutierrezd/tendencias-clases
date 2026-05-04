@@ -63,4 +63,11 @@ class TicketsController extends Controller
     {
         //
     }
+
+    public function cambioestado(Request $request)
+	{
+		$areaextension = Areaextension::find($request->id);
+		$areaextension->estado=$request->estado;
+		$areaextension->save();
+	}
 }
