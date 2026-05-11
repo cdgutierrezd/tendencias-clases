@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
+use Exception;
 use App\Models\Ticket;
+use App\Models\Cliente;
+use App\Models\Usuario;
 
 class TicketsController extends Controller
 {
@@ -21,7 +26,9 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::where('estado', 1)->get();
+        $usuarios = Usuario::where('estado', 1)->get();
+        return view('tickets.create', compact('clientes', 'usuarios'));
     }
 
     /**
@@ -29,7 +36,8 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Ticket::create($request->all());
+        return redirect()->route('tickets.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
     /**
@@ -61,13 +69,23 @@ class TicketsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $ticket = Ticket::findOrFail($id);
+            $ticket->delete();
+            return redirect()->route('tickets.index')->with('successMsg', 'El ticket se eliminó exitosamente');
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar el ticket: ' . $e->getMessage());
+            return redirect()->route('tickets.index')->withErrors('El ticket que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar el ticket: ' . $e->getMessage());
+            return redirect()->route('tickets.index')->withErrors('Ocurrió un error inesperado al eliminar el ticket. Comuníquese con el Administrador');
+        }
     }
 
-    public function cambioestado(Request $request)
-	{
-		$areaextension = Areaextension::find($request->id);
-		$areaextension->estado=$request->estado;
-		$areaextension->save();
-	}
+    public function cambioestadoticket(Request $request)
+    {
+        $ticket = Ticket::find($request->id);
+        $ticket->estado = $request->estado;
+        $ticket->save();
+    }
 }

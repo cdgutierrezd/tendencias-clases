@@ -5,6 +5,7 @@
 		</li>
     </ul>
     <ul class="navbar-nav ml-auto">
+		@auth
 		<div class="user-panel mt-2 pb-3 d-flex">
 			<div class="image">
 				@php
@@ -28,6 +29,7 @@
 				@csrf
 			</form>
 		</li>
+		@endauth
     </ul>
 </nav>
 

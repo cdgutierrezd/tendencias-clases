@@ -37,8 +37,8 @@
 											data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $tipoUsuario->estado ? 'checked' : '' }}>
 										</td>
 										<td>
-											<a href="{{ route('tipousuarios.edit', $tipoUsuario->id) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
-											<form class="d-inline delete-form" action="{{ route('tipousuarios.destroy', $tipoUsuario->id) }}" method="POST">
+											<a href="{{ route('tipousuarios.edit', $tipoUsuario) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
+											<form class="d-inline delete-form" action="{{ route('tipousuarios.destroy', $tipoUsuario) }}" method="POST">
 												@csrf
 												@method('DELETE')
 												<button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
@@ -55,4 +55,9 @@
 		</div>
     </section>
  </div>
+
+@push('scripts')
+<script src="{{ asset('backend/dist/js/statuschange.js') }}"></script>
+@endpush
+
 @endsection

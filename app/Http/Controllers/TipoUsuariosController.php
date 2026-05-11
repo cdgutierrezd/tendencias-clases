@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
+use Exception;
 use App\Models\TipoUsuario;
 
 class TipoUsuariosController extends Controller
@@ -21,7 +24,7 @@ class TipoUsuariosController extends Controller
      */
     public function create()
     {
-        //
+        return view('tipousuarios.create');
     }
 
     /**
@@ -29,7 +32,8 @@ class TipoUsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TipoUsuario::create($request->all());
+        return redirect()->route('tipousuarios.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
     /**
@@ -61,6 +65,23 @@ class TipoUsuariosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $tipoUsuario = TipoUsuario::findOrFail($id);
+            $tipoUsuario->delete();
+            return redirect()->route('tipousuarios.index')->with('successMsg', 'El tipo de usuario se eliminó exitosamente');
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar el tipo de usuario: ' . $e->getMessage());
+            return redirect()->route('tipousuarios.index')->withErrors('El tipo de usuario que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar el tipo de usuario: ' . $e->getMessage());
+            return redirect()->route('tipousuarios.index')->withErrors('Ocurrió un error inesperado al eliminar el tipo de usuario. Comuníquese con el Administrador');
+        }
+    }
+
+    public function cambioestadotipousuario(Request $request)
+    {
+        $tipoUsuario = TipoUsuario::find($request->id);
+        $tipoUsuario->estado = $request->estado;
+        $tipoUsuario->save();
     }
 }

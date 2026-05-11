@@ -39,8 +39,8 @@
 											data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $usuario->estado ? 'checked' : '' }}>
 										</td>
 										<td>
-											<a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
-											<form class="d-inline delete-form" action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST">
+											<a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
+											<form class="d-inline delete-form" action="{{ route('usuarios.destroy', $usuario) }}" method="POST">
 												@csrf
 												@method('DELETE')
 												<button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
@@ -57,4 +57,9 @@
 		</div>
     </section>
  </div>
+
+@push('scripts')
+<script src="{{ asset('backend/dist/js/statuschange.js') }}"></script>
+@endpush
+
 @endsection

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
+use Exception;
 use App\Models\Cliente;
 
 class ClientesController extends Controller
@@ -21,7 +24,7 @@ class ClientesController extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.create');
     }
 
     /**
@@ -29,7 +32,8 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cliente::create($request->all());
+        return redirect()->route('clientes.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
     /**
@@ -61,6 +65,23 @@ class ClientesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $cliente = Cliente::findOrFail($id);
+            $cliente->delete();
+            return redirect()->route('clientes.index')->with('successMsg', 'El cliente se eliminó exitosamente');
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar el cliente: ' . $e->getMessage());
+            return redirect()->route('clientes.index')->withErrors('El cliente que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar el cliente: ' . $e->getMessage());
+            return redirect()->route('clientes.index')->withErrors('Ocurrió un error inesperado al eliminar el cliente. Comuníquese con el Administrador');
+        }
+    }
+
+    public function cambioestadocliente(Request $request)
+    {
+        $cliente = Cliente::find($request->id);
+        $cliente->estado = $request->estado;
+        $cliente->save();
     }
 }

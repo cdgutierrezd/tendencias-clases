@@ -23,19 +23,44 @@ Route::get('/about', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
     Route::resource('clientes', ClientesController::class);
+    Route::get('cambioestadocliente', [ClientesController::class, 'cambioestadocliente'])->name('cambioestadocliente');
 
     Route::resource('tickets', TicketsController::class);
     Route::get('cambioestadoticket', [TicketsController::class, 'cambioestadoticket'])->name('cambioestadoticket');
 
     Route::resource('comentarios', ComentariosController::class);
-
+    Route::get('cambioestadocomentario', [ComentariosController::class, 'cambioestadocomentario'])->name('cambioestadocomentario');
 
     Route::resource('tipousuarios', TipoUsuariosController::class);
+    Route::get('cambioestadotipousuario', [TipoUsuariosController::class, 'cambioestadotipousuario'])->name('cambioestadotipousuario');
 
     Route::resource('usuarios', UsuariosController::class);
+    Route::get('cambioestadousuario', [UsuariosController::class, 'cambioestadousuario'])->name('cambioestadousuario');
 });
 
 
 
 Auth::routes();
+
+// Rutas para visualizar páginas de error (solo para desarrollo)
+Route::get('/errors/403', function() {
+    return view('errors.403');
+})->name('error.403');
+
+Route::get('/errors/404', function() {
+    return view('errors.404');
+})->name('error.404');
+
+Route::get('/errors/500', function() {
+    return view('errors.500');
+})->name('error.500');
+
+Route::get('/errors/419', function() {
+    return view('errors.419');
+})->name('error.419');
+
+Route::get('/errors/503', function() {
+    return view('errors.503');
+})->name('error.503');

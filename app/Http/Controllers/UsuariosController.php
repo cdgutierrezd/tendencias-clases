@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
+use Exception;
 use App\Models\Usuario;
+use App\Models\TipoUsuario;
 
 class UsuariosController extends Controller
 {
@@ -21,7 +25,9 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        $tipoUsuarios = TipoUsuario::where('estado', 1)->get();
+        return view('usuarios.create', compact('tipoUsuarios'));
+    }
     }
 
     /**
@@ -29,7 +35,8 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Usuario::create($request->all());
+        return redirect()->route('usuarios.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
     /**
@@ -61,6 +68,23 @@ class UsuariosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $usuario = Usuario::findOrFail($id);
+            $usuario->delete();
+            return redirect()->route('usuarios.index')->with('successMsg', 'El usuario se eliminó exitosamente');
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar el usuario: ' . $e->getMessage());
+            return redirect()->route('usuarios.index')->withErrors('El usuario que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar el usuario: ' . $e->getMessage());
+            return redirect()->route('usuarios.index')->withErrors('Ocurrió un error inesperado al eliminar el usuario. Comuníquese con el Administrador');
+        }
+    }
+
+    public function cambioestadousuario(Request $request)
+    {
+        $usuario = Usuario::find($request->id);
+        $usuario->estado = $request->estado;
+        $usuario->save();
     }
 }
