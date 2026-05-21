@@ -30,20 +30,20 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof NotFoundHttpException) {
-            return response()->view('errors.404', [], 404);
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return (new NotFoundHttpException())->render($request);
         }
 
-        if ($exception instanceof ForbiddenHttpException) {
-            return response()->view('errors.403', [], 403);
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException) {
+            return (new ForbiddenHttpException())->render($request);
         }
 
-        if ($exception instanceof InternalServerErrorException) {
-            return response()->view('errors.500', [], 500);
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            return (new SessionExpiredException())->render($request);
         }
 
-        if ($exception instanceof SessionExpiredException) {
-            return response()->view('errors.419', [], 419);
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException && $exception->getStatusCode() == 500) {
+            return (new InternalServerErrorException())->render($request);
         }
 
         return parent::render($request, $exception);
