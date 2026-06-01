@@ -8,6 +8,7 @@ use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\ComentariosController;
 use App\Http\Controllers\TipoUsuariosController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\ReporteController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -30,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('tickets', TicketsController::class);
     Route::get('cambioestadoticket', [TicketsController::class, 'cambioestadoticket'])->name('cambioestadoticket');
     Route::get('tickets/{id}/imprimir', [TicketsController::class, 'imprimir'])->name('tickets.imprimir');
+    Route::get('reporte-excel/{id}', [ReporteController::class, 'exportPorId'])->name('reportes.excel.id');
+    Route::get('reporte-excel', [ReporteController::class, 'exportGeneral'])->name('reportes.excel.general');
 
     Route::resource('comentarios', ComentariosController::class);
     Route::get('cambioestadocomentario', [ComentariosController::class, 'cambioestadocomentario'])->name('cambioestadocomentario');

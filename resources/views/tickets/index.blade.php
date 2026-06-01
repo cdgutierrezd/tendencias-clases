@@ -17,6 +17,7 @@
 					<div class="card">
 						<div class="card-header bg-secondary" style="font-size: 1.75rem;font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem;">
 							@yield('title')
+							<a href="{{ route('reportes.excel.general') }}" class="btn btn-success float-right ml-2" title="Exportar Excel General"><i class="fas fa-file-excel"></i></a>
 							<a href="{{ route('tickets.create') }}" class="btn btn-primary float-right" title="Nuevo"><i class="fas fa-plus nav-icon"></i></a>
 						</div>
 						<div class="card-body">
