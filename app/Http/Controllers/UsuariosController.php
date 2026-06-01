@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Exception;
 use App\Models\Usuario;
 use App\Models\TipoUsuario;
+use App\Http\Requests\UsuarioRequest;
 
 class UsuariosController extends Controller
 {
@@ -33,9 +34,9 @@ class UsuariosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UsuarioRequest $request)
     {
-        Usuario::create($request->all());
+        Usuario::create($request->validated());
         return redirect()->route('usuarios.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
@@ -52,15 +53,19 @@ class UsuariosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $tipoUsuarios = TipoUsuario::where('estado', 1)->get();
+        return view('usuarios.edit', compact('usuario', 'tipoUsuarios'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UsuarioRequest $request, string $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update($request->validated());
+        return redirect()->route('usuarios.index')->with('successMsg', 'El usuario se actualizó exitosamente');
     }
 
     /**

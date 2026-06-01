@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\QueryException;
 use Exception;
 use App\Models\Cliente;
+use App\Http\Requests\ClienteRequest;
 
 class ClientesController extends Controller
 {
@@ -30,9 +31,9 @@ class ClientesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ClienteRequest $request)
     {
-        Cliente::create($request->all());
+        Cliente::create($request->validated());
         return redirect()->route('clientes.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
@@ -49,15 +50,18 @@ class ClientesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ClienteRequest $request, string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        $cliente->update($request->validated());
+        return redirect()->route('clientes.index')->with('successMsg', 'El cliente se actualizó exitosamente');
     }
 
     /**

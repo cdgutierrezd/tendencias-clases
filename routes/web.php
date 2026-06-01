@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('tickets', TicketsController::class);
     Route::get('cambioestadoticket', [TicketsController::class, 'cambioestadoticket'])->name('cambioestadoticket');
+    Route::get('tickets/{id}/imprimir', [TicketsController::class, 'imprimir'])->name('tickets.imprimir');
 
     Route::resource('comentarios', ComentariosController::class);
     Route::get('cambioestadocomentario', [ComentariosController::class, 'cambioestadocomentario'])->name('cambioestadocomentario');

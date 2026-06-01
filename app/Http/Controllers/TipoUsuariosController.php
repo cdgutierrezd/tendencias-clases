@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\QueryException;
 use Exception;
 use App\Models\TipoUsuario;
+use App\Http\Requests\TipoUsuarioRequest;
 
 class TipoUsuariosController extends Controller
 {
@@ -30,9 +31,9 @@ class TipoUsuariosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TipoUsuarioRequest $request)
     {
-        TipoUsuario::create($request->all());
+        TipoUsuario::create($request->validated());
         return redirect()->route('tipousuarios.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 

@@ -9,6 +9,7 @@ use Exception;
 use App\Models\Comentario;
 use App\Models\Ticket;
 use App\Models\Usuario;
+use App\Http\Requests\ComentarioRequest;
 
 class ComentariosController extends Controller
 {
@@ -34,9 +35,9 @@ class ComentariosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ComentarioRequest $request)
     {
-        Comentario::create($request->all());
+        Comentario::create($request->validated());
         return redirect()->route('comentarios.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
@@ -53,15 +54,20 @@ class ComentariosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $comentario = Comentario::findOrFail($id);
+        $tickets = Ticket::where('estado', 1)->get();
+        $usuarios = Usuario::where('estado', 1)->get();
+        return view('comentarios.edit', compact('comentario', 'tickets', 'usuarios'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ComentarioRequest $request, string $id)
     {
-        //
+        $comentario = Comentario::findOrFail($id);
+        $comentario->update($request->validated());
+        return redirect()->route('comentarios.index')->with('successMsg', 'El comentario se actualizó exitosamente');
     }
 
     /**

@@ -9,6 +9,8 @@ use Exception;
 use App\Models\Ticket;
 use App\Models\Cliente;
 use App\Models\Usuario;
+use App\Http\Requests\TicketRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TicketsController extends Controller
 {
@@ -34,18 +36,19 @@ class TicketsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TicketRequest $request)
     {
-        Ticket::create($request->all());
+        Ticket::create($request->validated());
         return redirect()->route('tickets.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios'])->findOrFail($id);
+        return view('tickets.show', compact('ticket'));
     }
 
     /**
@@ -53,15 +56,20 @@ class TicketsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        $clientes = Cliente::where('estado', 1)->get();
+        $usuarios = Usuario::where('estado', 1)->get();
+        return view('tickets.edit', compact('ticket', 'clientes', 'usuarios'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TicketRequest $request, string $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        $ticket->update($request->validated());
+        return redirect()->route('tickets.index')->with('successMsg', 'El ticket se actualizó exitosamente');
     }
 
     /**
@@ -87,5 +95,20 @@ class TicketsController extends Controller
         $ticket = Ticket::find($request->id);
         $ticket->estado = $request->estado;
         $ticket->save();
+    }
+
+    public function imprimir($id)
+    {
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario'])->findOrFail($id);
+
+        $data = [
+            'ticket' => $ticket,
+            'fecha' => now()->format('d/m/Y H:i'),
+        ];
+
+        $pdf = PDF::loadView('tickets.pdf', $data)
+                  ->setPaper('a4', 'portrait');
+
+        return $pdf->stream('ticket-' . $ticket->id . '.pdf');
     }
 }

@@ -43,12 +43,14 @@
 											data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $ticket->estado ? 'checked' : '' }}>
 										</td>
 										<td>
+											<a href="{{ route('tickets.imprimir', $ticket->id) }}" class="btn btn-sm btn-success" target="_blank" title="Imprimir"><i class="fas fa-print"></i></a>
 											<a href="{{ route('tickets.edit', $ticket) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
 											<form class="d-inline delete-form" action="{{ route('tickets.destroy', $ticket) }}" method="POST">
 												@csrf
 												@method('DELETE')
 												<button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
 											</form>
+											<a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-warning btn-sm" title="Ver"><i class="fas fa-eye"></i></a>
 										</td>
 									</tr>
 									@endforeach
