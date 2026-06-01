@@ -18,6 +18,7 @@
 						<div class="card-header bg-secondary" style="font-size: 1.75rem;font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem;">
 							@yield('title')
 							<a href="{{ route('reportes.excel.general') }}" class="btn btn-success float-right ml-2" title="Exportar Excel General"><i class="fas fa-file-excel"></i></a>
+							<a href="{{ route('tickets.selectPdf') }}" class="btn btn-danger float-right ml-2" title="Ver PDF"><i class="fas fa-file-pdf"></i></a>
 							<a href="{{ route('tickets.create') }}" class="btn btn-primary float-right" title="Nuevo"><i class="fas fa-plus nav-icon"></i></a>
 						</div>
 						<div class="card-body">
@@ -44,7 +45,6 @@
 											data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $ticket->estado ? 'checked' : '' }}>
 										</td>
 										<td>
-											<a href="{{ route('tickets.imprimir', $ticket->id) }}" class="btn btn-sm btn-success" target="_blank" title="Imprimir"><i class="fas fa-print"></i></a>
 											<a href="{{ route('tickets.edit', $ticket) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
 											<form class="d-inline delete-form" action="{{ route('tickets.destroy', $ticket) }}" method="POST">
 												@csrf

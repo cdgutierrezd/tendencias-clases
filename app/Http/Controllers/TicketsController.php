@@ -111,4 +111,56 @@ class TicketsController extends Controller
 
         return $pdf->stream('ticket-' . $ticket->id . '.pdf');
     }
+
+    /**
+     * Mostrar vista para seleccionar/ver PDFs de tickets.
+     */
+    public function selectPdf()
+    {
+        $tickets = Ticket::orderBy('id', 'desc')->paginate(8);
+        return view('tickets.select-pdf', compact('tickets'));
+    }
+
+    /**
+     * Ver PDF de un ticket (stream) en el navegador.
+     */
+    public function viewPdf($id)
+    {
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario'])->findOrFail($id);
+
+        $data = [
+            'ticket' => $ticket,
+            'fecha' => now()->format('d/m/Y H:i'),
+        ];
+
+        $pdf = PDF::loadView('tickets.pdf', $data)->setPaper('a4', 'portrait');
+
+        return $pdf->stream('ticket-' . $ticket->id . '.pdf');
+    }
+
+    /**
+     * Exportar PDF: puede recibir 'all' (todos), un id de cliente o un id de ticket.
+     */
+    public function exportPdf($id)
+    {
+        // Exportar todos
+        if ($id === 'all') {
+            $tickets = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario'])->get();
+            $pdf = PDF::loadView('tickets.pdf-todos', compact('tickets'))->setPaper('a4', 'portrait');
+            return $pdf->download('tickets-todos.pdf');
+        }
+
+        // Si existe un cliente con ese id, generar historial de reparación del cliente
+        $cliente = Cliente::find($id);
+        if ($cliente) {
+            $tickets = $cliente->tickets()->with(['cliente', 'usuarioAsignado', 'comentarios.usuario'])->get();
+            $pdf = PDF::loadView('tickets.pdf-historial-reparacion', compact('cliente', 'tickets'))->setPaper('a4', 'portrait');
+            return $pdf->download('historial-cliente-' . $cliente->id . '.pdf');
+        }
+
+        // Finalmente, asumir que es un id de ticket
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario'])->findOrFail($id);
+        $pdf = PDF::loadView('tickets.pdf-historial', compact('ticket'))->setPaper('a4', 'portrait');
+        return $pdf->download('ticket-' . $ticket->id . '.pdf');
+    }
 }

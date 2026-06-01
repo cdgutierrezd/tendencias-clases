@@ -89,7 +89,7 @@
                 {{ $comentario->usuario->nombre ?? 'Usuario' }}
                 <span class="comment-date">- {{ $comentario->created_at->format('d/m/Y H:i') }}</span>
             </div>
-            <div>{{ $comentario->contenido }}</div>
+            <div>{{ $comentario->mensaje }}</div>
         </div>
         @endforeach
     </div>

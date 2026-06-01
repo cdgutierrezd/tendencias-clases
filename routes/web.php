@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('tickets', TicketsController::class);
     Route::get('cambioestadoticket', [TicketsController::class, 'cambioestadoticket'])->name('cambioestadoticket');
     Route::get('tickets/{id}/imprimir', [TicketsController::class, 'imprimir'])->name('tickets.imprimir');
+    // Rutas para gestionar vista y exportación de PDFs de tickets
+    Route::get('tickets/pdf/select', [TicketsController::class, 'selectPdf'])->name('tickets.selectPdf');
+    Route::get('tickets/{id}/view-pdf', [TicketsController::class, 'viewPdf'])->name('tickets.viewPdf');
+    Route::get('tickets/pdf/export/{id}', [TicketsController::class, 'exportPdf'])->name('tickets.exportPdf');
     Route::get('reporte-excel/{id}', [ReporteController::class, 'exportPorId'])->name('reportes.excel.id');
     Route::get('reporte-excel', [ReporteController::class, 'exportGeneral'])->name('reportes.excel.general');
 
