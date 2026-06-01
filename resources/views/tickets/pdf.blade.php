@@ -33,7 +33,7 @@
 <body>
     <div class="header">
         <h1>TICKET DE SOPORTE</h1>
-        <p>Generado el {{ $fecha }}</p>
+        <p>Generado el {{ now()->format('d/m/Y H:i') }}</p>
         <p>Ticket #{{ $ticket->id }}</p>
     </div>
 

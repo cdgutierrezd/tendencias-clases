@@ -10,6 +10,7 @@ use App\Models\Comentario;
 use App\Models\Ticket;
 use App\Models\Usuario;
 use App\Http\Requests\ComentarioRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ComentariosController extends Controller
 {
@@ -20,6 +21,26 @@ class ComentariosController extends Controller
     {
         $comentarios = Comentario::all();
         return view('comentarios.index', compact('comentarios'));
+    }
+
+    public function viewPdf($id)
+    {
+        $comentario = Comentario::with(['ticket', 'usuario'])->findOrFail($id);
+        $pdf = Pdf::loadView('comentarios.pdf-single', compact('comentario'))->setPaper('a4', 'portrait');
+        return $pdf->stream('comentario-' . $comentario->id . '.pdf');
+    }
+
+    public function exportPdf($id = null)
+    {
+        if ($id === 'all' || $id === null) {
+            $comentarios = Comentario::with(['ticket', 'usuario'])->get();
+            $pdf = Pdf::loadView('comentarios.pdf', compact('comentarios'))->setPaper('a4', 'portrait');
+            return $pdf->download('comentarios.pdf');
+        }
+
+        $comentario = Comentario::with(['ticket', 'usuario'])->findOrFail($id);
+        $pdf = Pdf::loadView('comentarios.pdf-single', compact('comentario'))->setPaper('a4', 'portrait');
+        return $pdf->download('comentario-' . $comentario->id . '.pdf');
     }
 
     /**
@@ -46,7 +67,8 @@ class ComentariosController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $comentario = Comentario::with(['ticket', 'usuario'])->findOrFail($id);
+        return view('comentarios.show', compact('comentario'));
     }
 
     /**

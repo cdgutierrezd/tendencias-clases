@@ -17,6 +17,7 @@
                     <div class="card">
                         <div class="card-header bg-secondary" style="font-size: 1.75rem;font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem;">
                             @yield('title')
+                            <a href="{{ route('reportes.excel.clientes') }}" class="btn btn-success float-right ml-2" title="Exportar Excel"><i class="fas fa-file-excel"></i></a>
                             <a href="{{ route('clientes.create') }}" class="btn btn-primary float-right" title="Nuevo"><i class="fas fa-plus nav-icon"></i></a>
                         </div>
                         <div class="card-body">
@@ -41,6 +42,7 @@
                                             data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $cliente->estado ? 'checked' : '' }}>
                                         </td>
                                         <td>
+                                            <a href="{{ route('clientes.show', $cliente) }}" class="btn btn-warning btn-sm" title="Ver"><i class="fas fa-eye"></i></a>
                                             <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
                                             <form class="d-inline delete-form" action="{{ route('clientes.destroy', $cliente) }}" method="POST">
                                                 @csrf

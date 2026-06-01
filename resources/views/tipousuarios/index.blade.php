@@ -36,8 +36,7 @@
 											<input data-type="tipousuario" data-id="{{$tipoUsuario->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
 											data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $tipoUsuario->estado ? 'checked' : '' }}>
 										</td>
-										<td>
-											<a href="{{ route('tipousuarios.edit', $tipoUsuario) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
+										<td>												<a href="{{ route('tipousuarios.show', $tipoUsuario) }}" class="btn btn-warning btn-sm" title="Ver"><i class="fas fa-eye"></i></a>											<a href="{{ route('tipousuarios.edit', $tipoUsuario) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
 											<form class="d-inline delete-form" action="{{ route('tipousuarios.destroy', $tipoUsuario) }}" method="POST">
 												@csrf
 												@method('DELETE')

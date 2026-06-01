@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Exception;
 use App\Models\Cliente;
 use App\Http\Requests\ClienteRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ClientesController extends Controller
 {
@@ -18,6 +19,26 @@ class ClientesController extends Controller
     {
         $clientes = Cliente::all();
         return view('clientes.index',compact('clientes'));
+    }
+
+    public function viewPdf($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        $pdf = Pdf::loadView('clientes.pdf-single', compact('cliente'))->setPaper('a4', 'portrait');
+        return $pdf->stream('cliente-' . $cliente->id . '.pdf');
+    }
+
+    public function exportPdf($id = null)
+    {
+        if ($id === 'all' || $id === null) {
+            $clientes = Cliente::all();
+            $pdf = Pdf::loadView('clientes.pdf', compact('clientes'))->setPaper('a4', 'portrait');
+            return $pdf->download('clientes.pdf');
+        }
+
+        $cliente = Cliente::findOrFail($id);
+        $pdf = Pdf::loadView('clientes.pdf-single', compact('cliente'))->setPaper('a4', 'portrait');
+        return $pdf->download('cliente-' . $cliente->id . '.pdf');
     }
 
     /**
@@ -42,7 +63,8 @@ class ClientesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $cliente = Cliente::with('tickets')->findOrFail($id);
+        return view('clientes.show', compact('cliente'));
     }
 
     /**

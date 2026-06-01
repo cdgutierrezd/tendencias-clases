@@ -42,7 +42,8 @@ class TipoUsuariosController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $tipoUsuario = TipoUsuario::findOrFail($id);
+        return view('tipousuarios.show', compact('tipoUsuario'));
     }
 
     /**

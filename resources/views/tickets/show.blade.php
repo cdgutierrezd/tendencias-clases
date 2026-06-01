@@ -87,7 +87,13 @@
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-lg-2 col-xs-4">
-                                    <a href="{{ route('tickets.index') }}" class="btn btn-danger btn-block btn-flat">Atrás</a>
+                                    <a href="{{ route('tickets.viewPdf', $ticket->id) }}" target="_blank" class="btn btn-danger btn-block btn-flat"><i class="fas fa-eye"></i> Ver PDF</a>
+                                </div>
+                                <div class="col-lg-2 col-xs-4">
+                                    <a href="{{ route('tickets.exportPdf', $ticket->id) }}" class="btn btn-danger btn-block btn-flat"><i class="fas fa-download"></i> Descargar PDF</a>
+                                </div>
+                                <div class="col-lg-2 col-xs-4">
+                                    <a href="{{ route('tickets.index') }}" class="btn btn-secondary btn-block btn-flat">Atrás</a>
                                 </div>
                             </div>
                         </div>

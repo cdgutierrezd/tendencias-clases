@@ -29,7 +29,6 @@ class UsuariosController extends Controller
         $tipoUsuarios = TipoUsuario::where('estado', 1)->get();
         return view('usuarios.create', compact('tipoUsuarios'));
     }
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,7 +44,8 @@ class UsuariosController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $usuario = Usuario::with('tipoUsuario')->findOrFail($id);
+        return view('usuarios.show', compact('usuario'));
     }
 
     /**

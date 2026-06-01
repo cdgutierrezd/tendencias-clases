@@ -17,7 +17,8 @@
 					<div class="card">
 						<div class="card-header bg-secondary" style="font-size: 1.75rem;font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem;">
 							@yield('title')
-							<a href="{{ route('comentarios.create') }}" class="btn btn-primary float-right" title="Nuevo"><i class="fas fa-plus nav-icon"></i></a>
+							<a href="{{ route('reportes.excel.comentarios') }}" class="btn btn-success float-right ml-2" title="Exportar Excel"><i class="fas fa-file-excel"></i></a>
+						<a href="{{ route('comentarios.create') }}" class="btn btn-primary float-right" title="Nuevo"><i class="fas fa-plus nav-icon"></i></a>
 						</div>
 						<div class="card-body">
 							<table id="example1" class="table table-bordered table-hover" style="width:100%">
@@ -42,8 +43,7 @@
 											<input data-type="comentario" data-id="{{$comentario->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
 											data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $comentario->estado ? 'checked' : '' }}>
 										</td>
-										<td>
-											<a href="{{ route('comentarios.edit', $comentario) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
+										<td>												<a href="{{ route('comentarios.show', $comentario) }}" class="btn btn-warning btn-sm" title="Ver"><i class="fas fa-eye"></i></a>											<a href="{{ route('comentarios.edit', $comentario) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
 											<form class="d-inline delete-form" action="{{ route('comentarios.destroy', $comentario) }}" method="POST">
 												@csrf
 												@method('DELETE')
