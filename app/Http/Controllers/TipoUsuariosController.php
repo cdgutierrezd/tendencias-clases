@@ -51,15 +51,18 @@ class TipoUsuariosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tipoUsuario = TipoUsuario::findOrFail($id);
+        return view('tipousuarios.edit', compact('tipoUsuario'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TipoUsuarioRequest $request, string $id)
     {
-        //
+        $tipoUsuario = TipoUsuario::findOrFail($id);
+        $tipoUsuario->update($request->validated());
+        return redirect()->route('tipousuarios.index')->with('successMsg', 'El tipo de usuario se actualizó exitosamente');
     }
 
     /**

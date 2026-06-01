@@ -38,7 +38,7 @@
 										<td>{{ $ticket->titulo }}</td>
 										<td>{{ \Illuminate\Support\Str::limit($ticket->descripcion, 50) }}</td>
 										<td>{{ $ticket->cliente->nombre ?? 'N/A' }}</td>
-										<td>{{ $ticket->usuarioAsignado->nombre ?? 'Sin asignar' }}</td>
+									<td>{{ $ticket->usuarioAsignado?->nombre ?? 'Sin asignar' }} {{ $ticket->usuarioAsignado ? '(' . $ticket->usuarioAsignado->tipoUsuario?->nombre_tipo . ')' : '' }}</td>
 										<td>
 											<input data-type="ticket" data-id="{{$ticket->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
 											data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $ticket->estado ? 'checked' : '' }}>

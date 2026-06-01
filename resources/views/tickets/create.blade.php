@@ -46,7 +46,7 @@
                                                 <option value="">Sin asignar</option>
                                                 @foreach($usuarios as $usuario)
                                                     <option value="{{ $usuario->id }}" {{ old('usuario_asignado_id') == $usuario->id ? 'selected' : '' }}>
-                                                        {{ $usuario->nombre }}
+                                                        {{ $usuario->nombre }} {{ $usuario->tipoUsuario ? '(' . $usuario->tipoUsuario->nombre_tipo . ')' : '' }}
                                                     </option>
                                                 @endforeach
                                             </select>

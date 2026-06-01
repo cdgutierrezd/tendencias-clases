@@ -71,7 +71,7 @@
         </div>
         <div class="row">
             <div class="label">Usuario asignado:</div>
-            <div class="value">{{ $ticket->usuarioAsignado->nombre ?? 'Sin asignar' }}</div>
+            <div class="value">{{ $ticket->usuarioAsignado?->nombre ?? 'Sin asignar' }} {{ $ticket->usuarioAsignado ? '(' . $ticket->usuarioAsignado->tipoUsuario?->nombre_tipo . ')' : '' }}</div>
         </div>
     </div>
 
@@ -86,7 +86,7 @@
         @foreach($ticket->comentarios as $comentario)
         <div class="comment">
             <div class="comment-header">
-                {{ $comentario->usuario->nombre ?? 'Usuario' }}
+                {{ $comentario->usuario?->nombre ?? 'Usuario' }} {{ $comentario->usuario ? '(' . $comentario->usuario->tipoUsuario?->nombre_tipo . ')' : '' }}
                 <span class="comment-date">- {{ $comentario->created_at->format('d/m/Y H:i') }}</span>
             </div>
             <div>{{ $comentario->mensaje }}</div>

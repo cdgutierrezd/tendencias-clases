@@ -44,7 +44,7 @@
                                                     ID: {{ $comentario->id }}
                                                 </p>
                                                 <p style="color: #999; font-size: 0.85rem; margin-bottom: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                                    Usuario: {{ $comentario->usuario->nombre ?? 'N/A' }}
+                                                    Usuario: {{ $comentario->usuario?->nombre ?? 'N/A' }} {{ $comentario->usuario ? '(' . $comentario->usuario->tipoUsuario?->nombre_tipo . ')' : '' }}
                                                 </p>
                                                 <p style="color: #999; font-size: 0.85rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                                     {{ \Illuminate\Support\Str::limit($comentario->mensaje, 60) }}

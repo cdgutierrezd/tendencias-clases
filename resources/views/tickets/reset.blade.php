@@ -43,7 +43,7 @@
                                 <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Usuario Asignado</label>
-                                        <p>{{ $ticket->usuarioAsignado->name ?? 'Sin asignar' }}</p>
+                                        <p>{{ $ticket->usuarioAsignado?->nombre ?? 'Sin asignar' }} {{ $ticket->usuarioAsignado ? '(' . $ticket->usuarioAsignado->tipoUsuario?->nombre_tipo . ')' : '' }}</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
@@ -74,7 +74,7 @@
                                 <div class="col-lg-12">
                                     <div class="card card-outline card-info mb-2">
                                         <div class="card-body py-2">
-                                            <strong>{{ $comentario->usuario->name ?? 'N/A' }}</strong>
+                                            <strong>{{ $comentario->usuario?->nombre ?? 'N/A' }} {{ $comentario->usuario ? '(' . $comentario->usuario->tipoUsuario?->nombre_tipo . ')' : '' }}</strong>
                                             <span class="text-muted float-right">{{ $comentario->fecha }}</span>
                                             <p class="mb-0 mt-1">{{ $comentario->mensaje }}</p>
                                         </div>

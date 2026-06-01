@@ -24,7 +24,7 @@
 
     <div class="content">
         <p><span class="label">Ticket:</span> {{ $comentario->ticket->titulo ?? 'N/A' }}</p>
-        <p><span class="label">Usuario:</span> {{ $comentario->usuario->nombre ?? 'N/A' }}</p>
+        <p><span class="label">Usuario:</span> {{ $comentario->usuario?->nombre ?? 'N/A' }} {{ $comentario->usuario ? '(' . $comentario->usuario->tipoUsuario?->nombre_tipo . ')' : '' }}</p>
         <p><span class="label">Fecha:</span> {{ $comentario->fecha ?? $comentario->created_at->format('d/m/Y H:i') }}</p>
         <p><span class="label">Estado:</span> {{ $comentario->estado ? 'Activo' : 'Inactivo' }}</p>
     </div>

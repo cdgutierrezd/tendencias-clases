@@ -37,7 +37,7 @@
 										<td>{{ $comentario->id }}</td>
 										<td>{{ \Illuminate\Support\Str::limit($comentario->mensaje, 50) }}</td>
 										<td>{{ $comentario->ticket->titulo ?? 'N/A' }}</td>
-										<td>{{ $comentario->usuario->nombre ?? 'N/A' }}</td>
+									<td>{{ $comentario->usuario?->nombre ?? 'N/A' }} {{ $comentario->usuario ? '(' . $comentario->usuario->tipoUsuario?->nombre_tipo . ')' : '' }}</td>
 										<td>{{ $comentario->fecha }}</td>
 										<td>
 											<input data-type="comentario" data-id="{{$comentario->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 

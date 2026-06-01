@@ -42,7 +42,7 @@
                 <td>{{ $comentario->id }}</td>
                 <td class="message">{{ $comentario->mensaje }}</td>
                 <td>{{ $comentario->ticket->titulo ?? 'N/A' }}</td>
-                <td>{{ $comentario->usuario->nombre ?? 'N/A' }}</td>
+                <td>{{ $comentario->usuario?->nombre ?? 'N/A' }} {{ $comentario->usuario ? '(' . $comentario->usuario->tipoUsuario?->nombre_tipo . ')' : '' }}</td>
                 <td>{{ $comentario->fecha ?? $comentario->created_at->format('d/m/Y H:i') }}</td>
                 <td>
                     <span class="badge {{ $comentario->estado ? 'activo' : 'inactivo' }}">

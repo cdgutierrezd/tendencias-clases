@@ -37,7 +37,7 @@
                                 <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Usuario</label>
-                                        <p>{{ $comentario->usuario->nombre ?? 'N/A' }}</p>
+                                        <p>{{ $comentario->usuario?->nombre ?? 'N/A' }} {{ $comentario->usuario ? '(' . $comentario->usuario->tipoUsuario?->nombre_tipo . ')' : '' }}</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
