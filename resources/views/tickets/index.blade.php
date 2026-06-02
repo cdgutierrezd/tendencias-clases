@@ -26,6 +26,7 @@
 									<th width="10px">ID</th>
 									<th>Título</th>
 									<th>Descripción</th>
+									<th width="70px">Imagen</th>
 									<th>Cliente</th>
 									<th>Usuario Asignado</th>
 									<th width="60px">Estado</th>
@@ -37,6 +38,13 @@
 										<td>{{ $ticket->id }}</td>
 										<td>{{ $ticket->titulo }}</td>
 										<td>{{ \Illuminate\Support\Str::limit($ticket->descripcion, 50) }}</td>
+										<td>
+											@if($ticket->imagen)
+												<img src="{{ asset('storage/' . $ticket->imagen) }}" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:4px;">
+											@else
+												<span class="text-muted">—</span>
+											@endif
+										</td>
 										<td>{{ $ticket->cliente->nombre ?? 'N/A' }}</td>
 									<td>{{ $ticket->usuarioAsignado?->nombre ?? 'Sin asignar' }} {{ $ticket->usuarioAsignado ? '(' . $ticket->usuarioAsignado->tipoUsuario?->nombre_tipo . ')' : '' }}</td>
 										<td>

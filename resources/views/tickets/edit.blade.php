@@ -16,7 +16,7 @@
                         <div class="card-header bg-secondary">
                             <h3>@yield('title')</h3>
                         </div>
-                        <form method="POST" action="{{ route('tickets.update', $ticket->id) }}">
+                        <form method="POST" action="{{ route('tickets.update', $ticket->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -59,7 +59,20 @@
                                             <input type="date" class="form-control" name="fecha_creacion" value="{{ old('fecha_creacion', is_object($ticket->fecha_creacion) ? $ticket->fecha_creacion->format('Y-m-d') : $ticket->fecha_creacion) }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Imagen</label>
+                                            <input type="file" class="form-control" name="imagen" accept="image/*">
+                                        </div>
+                                        @if($ticket->imagen)
+                                            <div class="mt-2">
+                                                <strong>Imagen actual:</strong>
+                                                <br>
+                                                <img src="{{ asset('storage/' . $ticket->imagen) }}" alt="Imagen del ticket" style="max-width: 100%; max-height: 180px; border: 1px solid #ddd; padding: 4px; margin-top: 0.5rem;" />
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Descripción</label>
                                             <textarea class="form-control" name="descripcion" rows="4" placeholder="Descripción del ticket">{{ old('descripcion', $ticket->descripcion) }}</textarea>

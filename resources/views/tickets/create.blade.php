@@ -16,7 +16,7 @@
                         <div class="card-header bg-secondary">
                             <h3>@yield('title')</h3>
                         </div>
-                        <form method="POST" action="{{ route('tickets.store') }}">
+                        <form method="POST" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
@@ -58,7 +58,13 @@
                                             <input type="date" class="form-control" name="fecha_creacion" value="{{ old('fecha_creacion', date('Y-m-d')) }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Imagen</label>
+                                            <input type="file" class="form-control" name="imagen" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Descripción</label>
                                             <textarea class="form-control" name="descripcion" rows="4" placeholder="Descripción del ticket">{{ old('descripcion') }}</textarea>

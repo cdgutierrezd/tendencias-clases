@@ -58,12 +58,30 @@
                                         <p>{{ $ticket->fecha_cierre ?? 'Sin cerrar' }}</p>
                                     </div>
                                 </div>
+                                @if($ticket->imagen)
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Imagen</label>
+                                        <p>
+                                            <img src="{{ asset('storage/' . $ticket->imagen) }}" alt="Imagen del ticket" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 6px;" />
+                                        </p>
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Descripción</label>
                                         <p>{{ $ticket->descripcion ?? 'Sin descripción' }}</p>
                                     </div>
                                 </div>
+                                @if($ticket->imagen)
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Imagen</label><br>
+                                        <img src="{{ asset('storage/' . $ticket->imagen) }}" alt="Imagen del ticket" style="max-width:300px; border-radius:6px;">
+                                    </div>
+                                </div>
+                                @endif
                             </div>
 
                             @if($ticket->comentarios->count())

@@ -17,6 +17,7 @@ class TicketRequest extends FormRequest
             return [
                 'titulo'              => 'required|string|max:255',
                 'descripcion'         => 'nullable|string',
+                'imagen'              => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
                 'cliente_id'          => 'required|exists:clientes,id',
                 'usuario_asignado_id' => 'nullable|exists:usuarios,id',
                 'fecha_creacion'      => 'nullable|date',
@@ -28,6 +29,7 @@ class TicketRequest extends FormRequest
             return [
                 'titulo'              => 'required|string|max:255',
                 'descripcion'         => 'nullable|string',
+                'imagen'              => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
                 'cliente_id'          => 'required|exists:clientes,id',
                 'usuario_asignado_id' => 'nullable|exists:usuarios,id',
                 'fecha_creacion'      => 'nullable|date',

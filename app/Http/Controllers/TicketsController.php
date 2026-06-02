@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\QueryException;
 use Exception;
 use App\Models\Ticket;
@@ -38,7 +39,13 @@ class TicketsController extends Controller
      */
     public function store(TicketRequest $request)
     {
-        Ticket::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('imagen')) {
+            $data['imagen'] = $request->file('imagen')->store('ticket-images', 'public');
+        }
+
+        Ticket::create($data);
         return redirect()->route('tickets.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
@@ -68,7 +75,16 @@ class TicketsController extends Controller
     public function update(TicketRequest $request, string $id)
     {
         $ticket = Ticket::findOrFail($id);
-        $ticket->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('imagen')) {
+            if ($ticket->imagen && Storage::disk('public')->exists($ticket->imagen)) {
+                Storage::disk('public')->delete($ticket->imagen);
+            }
+            $data['imagen'] = $request->file('imagen')->store('ticket-images', 'public');
+        }
+
+        $ticket->update($data);
         return redirect()->route('tickets.index')->with('successMsg', 'El ticket se actualizó exitosamente');
     }
 
