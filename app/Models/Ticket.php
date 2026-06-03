@@ -41,4 +41,10 @@ class Ticket extends Model
         return $this->hasMany(Comentario::class,'ticket_id');
     }
 
+    // Historial de asignaciones (1:N)
+    public function asignaciones()
+    {
+        return $this->hasMany(TicketAsignacion::class, 'ticket_id')->orderBy('fecha_asignacion', 'desc');
+    }
+
 }

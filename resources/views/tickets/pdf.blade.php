@@ -80,6 +80,32 @@
         <div class="description">{{ $ticket->descripcion }}</div>
     </div>
 
+    <div class="section box">
+        <div class="info-title">HISTORIAL DE ASIGNACIONES</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuario Asignado</th>
+                    <th>Asignado Por</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($ticket->asignaciones as $asignacion)
+                <tr>
+                    <td>{{ $asignacion->usuario->nombre ?? 'N/A' }}</td>
+                    <td>{{ $asignacion->asignadoPor->name ?? 'N/A' }}</td>
+                    <td>{{ $asignacion->fecha_asignacion }}</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="3" style="text-align:center; color:#999;">Sin historial de asignaciones</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
     @if($ticket->comentarios && $ticket->comentarios->count() > 0)
     <div class="section box">
         <div class="comments-title">COMENTARIOS</div>

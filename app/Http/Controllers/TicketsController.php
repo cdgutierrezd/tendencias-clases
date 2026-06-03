@@ -10,6 +10,7 @@ use Exception;
 use App\Models\Ticket;
 use App\Models\Cliente;
 use App\Models\Usuario;
+use App\Models\TicketAsignacion;
 use App\Http\Requests\TicketRequest;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -45,7 +46,18 @@ class TicketsController extends Controller
             $data['imagen'] = $request->file('imagen')->store('ticket-images', 'public');
         }
 
-        Ticket::create($data);
+        $ticket = Ticket::create($data);
+
+        // Registrar asignación inicial si hay usuario asignado
+        if (!empty($data['usuario_asignado_id'])) {
+            TicketAsignacion::create([
+                'ticket_id'        => $ticket->id,
+                'usuario_id'       => $data['usuario_asignado_id'],
+                'asignado_por'     => auth()->id(),
+                'fecha_asignacion' => now(),
+            ]);
+        }
+
         return redirect()->route('tickets.index')->with('successMsg', 'El registro se guardó exitosamente');
     }
 
@@ -54,7 +66,13 @@ class TicketsController extends Controller
      */
     public function show($id)
     {
-        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios'])->findOrFail($id);
+        $ticket = Ticket::with([
+            'cliente',
+            'usuarioAsignado',
+            'comentarios.usuario',
+            'asignaciones.usuario.tipoUsuario',
+            'asignaciones.asignadoPor',
+        ])->findOrFail($id);
         return view('tickets.show', compact('ticket'));
     }
 
@@ -84,7 +102,21 @@ class TicketsController extends Controller
             $data['imagen'] = $request->file('imagen')->store('ticket-images', 'public');
         }
 
+        $usuarioAnterior = $ticket->usuario_asignado_id;
+
         $ticket->update($data);
+
+        // Registrar en historial solo si cambió el usuario asignado
+        $nuevoUsuario = $data['usuario_asignado_id'] ?? null;
+        if ($nuevoUsuario && $nuevoUsuario != $usuarioAnterior) {
+            TicketAsignacion::create([
+                'ticket_id'        => $ticket->id,
+                'usuario_id'       => $nuevoUsuario,
+                'asignado_por'     => auth()->id(),
+                'fecha_asignacion' => now(),
+            ]);
+        }
+
         return redirect()->route('tickets.index')->with('successMsg', 'El ticket se actualizó exitosamente');
     }
 
@@ -134,17 +166,14 @@ class TicketsController extends Controller
      */
     public function viewPdf($id)
     {
-        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario'])->findOrFail($id);
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario', 'asignaciones.usuario', 'asignaciones.asignadoPor'])->findOrFail($id);
         $pdf = Pdf::loadView('tickets.pdf', compact('ticket'))->setPaper('a4', 'portrait');
         return $pdf->stream('ticket-' . $ticket->id . '.pdf');
     }
 
-    /**
-     * Descargar PDF de un ticket.
-     */
     public function exportPdf($id)
     {
-        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario'])->findOrFail($id);
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario', 'asignaciones.usuario', 'asignaciones.asignadoPor'])->findOrFail($id);
         $pdf = Pdf::loadView('tickets.pdf', compact('ticket'))->setPaper('a4', 'portrait');
         return $pdf->download('ticket-' . $ticket->id . '.pdf');
     }

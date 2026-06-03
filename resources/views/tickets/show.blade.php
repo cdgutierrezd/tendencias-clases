@@ -58,16 +58,6 @@
                                         <p>{{ $ticket->fecha_cierre ?? 'Sin cerrar' }}</p>
                                     </div>
                                 </div>
-                                @if($ticket->imagen)
-                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Imagen</label>
-                                        <p>
-                                            <img src="{{ asset('storage/' . $ticket->imagen) }}" alt="Imagen del ticket" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 6px;" />
-                                        </p>
-                                    </div>
-                                </div>
-                                @endif
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Descripción</label>
@@ -75,14 +65,37 @@
                                     </div>
                                 </div>
                                 @if($ticket->imagen)
-                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Imagen</label><br>
-                                        <img src="{{ asset('storage/' . $ticket->imagen) }}" alt="Imagen del ticket" style="max-width:300px; border-radius:6px;">
+                                        <img src="{{ asset('storage/' . $ticket->imagen) }}" alt="Imagen del ticket" style="max-width:250px; height:auto; border-radius:6px; border:1px solid #ddd;">
                                     </div>
                                 </div>
                                 @endif
                             </div>
+
+                            <hr>
+                            <h5>Historial de Asignaciones</h5>
+                            <table class="table table-sm table-bordered">
+                                <thead class="text-primary">
+                                    <th>Usuario Asignado</th>
+                                    <th>Asignado Por</th>
+                                    <th>Fecha</th>
+                                </thead>
+                                <tbody>
+                                    @forelse($ticket->asignaciones as $asignacion)
+                                    <tr>
+                                        <td>{{ $asignacion->usuario->nombre ?? 'N/A' }} {{ $asignacion->usuario?->tipoUsuario ? '(' . $asignacion->usuario->tipoUsuario->nombre_tipo . ')' : '' }}</td>
+                                        <td>{{ $asignacion->asignadoPor->name ?? 'N/A' }}</td>
+                                        <td>{{ $asignacion->fecha_asignacion }}</td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">Sin historial de asignaciones</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
 
                             @if($ticket->comentarios->count())
                             <hr>
