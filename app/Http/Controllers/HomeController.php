@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Ticket;
+use App\Models\Cliente;
+use App\Models\Usuario;
+use App\Models\Comentario;
 
 class HomeController extends Controller
 {
@@ -23,7 +27,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $totalTickets       = Ticket::count();
+        $ticketsActivos     = Ticket::where('estado', 1)->count();
+        $totalClientes      = Cliente::count();
+        $totalUsuarios      = Usuario::count();
+        $totalComentarios   = Comentario::count();
+        $ticketsSinAsignar  = Ticket::whereNull('usuario_asignado_id')->count();
+
+        return view('home', compact(
+            'totalTickets',
+            'ticketsActivos',
+            'totalClientes',
+            'totalUsuarios',
+            'totalComentarios',
+            'ticketsSinAsignar'
+        ));
     }
 
 }
