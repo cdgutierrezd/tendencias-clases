@@ -1,15 +1,19 @@
 FROM php:8.2-apache
 
-# Instalar dependencias del sistema y extensiones de PHP necesarias para Laravel y TiDB
+# Instalar dependencias del sistema esenciales para Laravel
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
     zip \
     unzip \
     git \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql
+    && docker-php-ext-install gd pdo pdo_mysql zip mbstring exif pcntl bcmath xml
 
 # Habilitar mod_rewrite de Apache para Laravel
 RUN a2enmod rewrite
@@ -24,7 +28,9 @@ COPY . /var/www/html
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --no-dev --optimize-autoloader
+
+# Ejecutar composer install permitiendo que se adapte al entorno de Docker
+RUN composer install --no-interaction --no-plugins --no-scripts --no-dev --optimize-autoloader
 
 # Configurar permisos para Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
