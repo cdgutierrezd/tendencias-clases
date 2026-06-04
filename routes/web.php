@@ -11,6 +11,9 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ReporteController;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('home');
+    }
     return view('welcome');
 });
 
