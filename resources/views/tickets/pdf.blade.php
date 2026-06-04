@@ -93,7 +93,7 @@
             <tbody>
                 @forelse($ticket->asignaciones as $asignacion)
                 <tr>
-                    <td>{{ $asignacion->usuario->nombre ?? 'N/A' }}</td>
+                    <td>{{ $asignacion->usuario->nombre ?? 'N/A' }} {{ $asignacion->usuario?->tipoUsuario ? '(' . $asignacion->usuario->tipoUsuario->nombre_tipo . ')' : '' }}</td>
                     <td>{{ $asignacion->asignadoPor->name ?? 'N/A' }}</td>
                     <td>{{ $asignacion->fecha_asignacion }}</td>
                 </tr>

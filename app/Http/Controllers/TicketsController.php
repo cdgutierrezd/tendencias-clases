@@ -166,14 +166,14 @@ class TicketsController extends Controller
      */
     public function viewPdf($id)
     {
-        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario', 'asignaciones.usuario', 'asignaciones.asignadoPor'])->findOrFail($id);
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario', 'asignaciones.usuario.tipoUsuario', 'asignaciones.asignadoPor'])->findOrFail($id);
         $pdf = Pdf::loadView('tickets.pdf', compact('ticket'))->setPaper('a4', 'portrait');
         return $pdf->stream('ticket-' . $ticket->id . '.pdf');
     }
 
     public function exportPdf($id)
     {
-        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario', 'asignaciones.usuario', 'asignaciones.asignadoPor'])->findOrFail($id);
+        $ticket = Ticket::with(['cliente', 'usuarioAsignado', 'comentarios.usuario', 'asignaciones.usuario.tipoUsuario', 'asignaciones.asignadoPor'])->findOrFail($id);
         $pdf = Pdf::loadView('tickets.pdf', compact('ticket'))->setPaper('a4', 'portrait');
         return $pdf->download('ticket-' . $ticket->id . '.pdf');
     }
