@@ -10,11 +10,14 @@ use App\Http\Controllers\TipoUsuariosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ReporteController;
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('home');
     }
     return view('welcome');
+});*/
+Route::get('/', function () {
+    return 'Laravel funciona';
 });
 
 Route::get('/about', function () {
