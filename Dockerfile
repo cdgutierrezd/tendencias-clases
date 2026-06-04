@@ -26,10 +26,10 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Habilitar mod_rewrite para Laravel
+# Habilitar mod_rewrite
 RUN a2enmod rewrite
 
-# Configurar Apache para usar /public
+# Configurar Apache para Laravel
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
@@ -39,7 +39,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
     /etc/apache2/apache2.conf \
     /etc/apache2/conf-available/*.conf
 
-# Copiar Composer
+# Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copiar proyecto
@@ -48,14 +48,17 @@ COPY . /var/www/html
 # Directorio de trabajo
 WORKDIR /var/www/html
 
-# Instalar dependencias PHP
+# Instalar dependencias SIN ejecutar scripts de Laravel
 RUN composer install \
     --no-interaction \
     --no-dev \
-    --optimize-autoloader
+    --optimize-autoloader \
+    --no-scripts
 
-# Permisos Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Permisos
+RUN mkdir -p storage/logs bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
 
 EXPOSE 80
 
