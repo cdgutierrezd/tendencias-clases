@@ -17,11 +17,12 @@
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
     <!-- Theme style -->
+    <!--
     <link rel="stylesheet" href="{{asset('backend/dist/css/adminlte.css')}}">
-
+    -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!--@vite(['resources/sass/app.scss', 'resources/js/app.js'])-->
 
     @stack('css')
 </head>
